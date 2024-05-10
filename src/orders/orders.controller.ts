@@ -3,14 +3,11 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
   Logger,
   Inject,
 } from '@nestjs/common';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { CreateOrderDto } from './dto';
 import { ORDER_SERVICE } from 'src/config/services';
 import { ClientProxy } from '@nestjs/microservices';
 
