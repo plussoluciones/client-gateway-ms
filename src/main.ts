@@ -18,6 +18,9 @@ async function bootstrap() {
     }),
   );
 
+  logger.log("Hola mundo desde client");
+  
+
   app.useGlobalFilters(new RpcCustomExceptionFilter());
 
   await app.listen(envs.port);
