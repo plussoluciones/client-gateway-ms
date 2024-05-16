@@ -1,9 +1,20 @@
-import { Body, Controller, Inject, Logger, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Inject,
+  Logger,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { NATS_SERVICE } from 'src/config/services';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { LoginUserDto } from './dto';
+import { AuthGuard } from './guards/auth.guard';
+import { Token, User } from './decorators';
+import { CurrentUser } from './interfaces/current-user.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -34,15 +45,19 @@ export class AuthController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Post('verify')
-  async verifyUser() {
-    try {
-      const user = await firstValueFrom(
-        this.client.send('auth.verify.user', {}),
-      );
-      return user;
-    } catch (error) {
-      throw new RpcException(error);
-    }
+  async verifyUser(@User() user: CurrentUser, @Token() token: string) {
+    // const user = req['user'];
+    // const token = req['token'];
+    return { user, token };
+    // try {
+    //   const userdb = await firstValueFrom(
+    //     this.client.send('auth.verify.user', user),
+    //   );
+    //   return userdb;
+    // } catch (error) {
+    //   throw new RpcException(error);
+    // }
   }
 }
