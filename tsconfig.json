@@ -20,7 +20,7 @@
   },
   "watchOptions": {
     // Use native file system events for files and directories
-    "watchFile": "priorityPollingInterval",
+    "watchFile": "fixedPollingInterval",
     "watchDirectory": "dynamicprioritypolling",
     // Poll files for updates more frequently
     // when they're updated a lot.
